@@ -1,0 +1,2 @@
+opencv_pkg
+-DCATKIN_DEVEL_PREFIX=/home/computing/Downloads/WK4/devel -DCMAKE_INSTALL_PREFIX=/home/computing/Downloads/WK4/install -G Unix Makefiles
