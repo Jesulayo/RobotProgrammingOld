@@ -14,14 +14,14 @@ class Mask_Out_Green:
     cv2.createTrackbar("H_high", "Trackbars", 107, 179, Empty)
     cv2.createTrackbar("H_low", "Trackbars", 100, 179, Empty)
     cv2.createTrackbar("S_high", "Trackbars", 255, 255, Empty)
-    cv2.createTrackbar("S_low", "Trackbars", 8, 255, Empty)
+    cv2.createTrackbar("S_low", "Trackbars", 18, 255, Empty)
     cv2.createTrackbar("V_high", "Trackbars", 255, 255, Empty)
     cv2.createTrackbar("V_low", "Trackbars", 46, 255, Empty)
 
 
     def __init__(self):
         self.bridge = CvBridge()
-        self.front_camera = rospy.Subscriber("/thorvald_001/kinect2_front_camera/hd/image_color_rect", Image, self.callback)
+        self.front_camera = rospy.Subscriber("/thorvald_001/kinect2_right_camera/hd/image_color_rect", Image, self.callback)
     
     def callback(self, data):
         try:
@@ -44,6 +44,7 @@ class Mask_Out_Green:
         hsv_image = cv2.cvtColor(cv_image, cv2.COLOR_BGR2HSV)
         color_selected = cv2.inRange(hsv_image,lower_color, higher_color)
         cv2.imshow('Trackbars', color_selected)
+        cv2.imshow("Color Image", cv_image)
         cv2.waitKey(30)
 
 if __name__ == '__main__':
