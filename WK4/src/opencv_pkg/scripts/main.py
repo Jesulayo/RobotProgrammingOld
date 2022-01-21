@@ -1,3 +1,4 @@
+# from asyncio.windows_events import NULL
 import rospy
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
@@ -6,8 +7,6 @@ import numpy as np
 # from tracker import EuclideanDistTracker
 
 # tracker = EuclideanDistTracker()
-
-id = 0
 
 class Tracker(object):
     def __init__(self):
@@ -51,7 +50,8 @@ class Tracker(object):
         # Retrieve contour for analysis and shape detection
         cnts, _ = cv2.findContours(dilation, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)[-2:]
         detections = []
-        # id = 0
+        id = 0
+        
         for c in cnts:
             area = cv2.contourArea(c)
             # print(area)
