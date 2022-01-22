@@ -1,53 +1,68 @@
-import math
+#!/usr/bin/env python
 
+# Python libs
+import sys, time
 
-class EuclideanDistTracker:
-    def __init__(self):
-        # Store the center positions of the objects
-        self.center_points = {}
-        # Keep the count of the IDs
-        # each time a new object id detected, the count will increase by one
-        self.id_count = 0
+# OpenCV
+import cv2
 
+# Ros libraries
+import roslib, rospy, image_geometry
 
-    def update(self, objects_rect):
-        # Objects boxes and ids
-        objects_bbs_ids = []
+# Ros Messages
+from sensor_msgs.msg import Image, CameraInfo
+from geometry_msgs.msg import PoseStamped
+from cv_bridge import CvBridge, CvBridgeError
 
-        # Get center point of new object
-        for rect in objects_rect:
-            x, y, w, h = rect
-            cx = (x + x + w) // 2
-            cy = (y + y + h) // 2
+class image_projection:
+    camera_model = None
 
-            # Find out if that object was detected already
-            same_object_detected = False
-            for id, pt in self.center_points.items():
-                dist = math.hypot(cx - pt[0], cy - pt[1])
+    def __init__(self):    
 
-                if dist < 25:
-                    self.center_points[id] = (cx, cy)
-                    # print(self.center_points)
-                    objects_bbs_ids.append([x, y, w, h, id])
-                    same_object_detected = True
-                    break
+        self.bridge = CvBridge()
 
-            # New object is detected we assign the ID to that object
-            if same_object_detected is False:
-                self.center_points[self.id_count] = (cx, cy)
-                objects_bbs_ids.append([x, y, w, h, self.id_count])
-                self.id_count += 1
+        self.camera_info_sub = rospy.Subscriber('/thorvald_001/kinect2_front_camera/hd/camera_info', 
+            CameraInfo, self.camera_info_callback)
 
-        # Clean the dictionary by center points to remove IDS not used anymore
-        new_center_points = {}
-        for obj_bb_id in objects_bbs_ids:
-            _, _, _, _, object_id = obj_bb_id
-            center = self.center_points[object_id]
-            new_center_points[object_id] = center
+        rospy.Subscriber("/thorvald_001/kinect2_front_camera/hd/image_color_rect",
+            Image, self.image_callback)
 
-        # Update dictionary with IDs not used removed
-        self.center_points = new_center_points.copy()
-        return objects_bbs_ids
+    def image_callback(self, data):
+        if not self.camera_model:
+            return
 
+        #project a point in camera coordinates into the pixel coordinates
+        uv = self.camera_model.project3dToPixel((0,0,1.0))
 
+        print('Pixel coordinates: ', uv)
+        print('')
 
+        try:
+            cv_image = self.bridge.imgmsg_to_cv2(data, "bgr8")
+        except CvBridgeError as e:
+            print(e)
+
+        ret, thres = cv2.threshold(cv_image, 0, 255, cv2.THRESH_BINARY)
+        #resize for visualisation
+        cv_image_s = cv2.resize(cv_image, (0,0), fx=0.5, fy=0.5)
+
+        cv2.imshow("Image window", cv_image_s)
+        cv2.waitKey(1)
+
+    def camera_info_callback(self, data):
+        self.camera_model = image_geometry.PinholeCameraModel()
+        self.camera_model.fromCameraInfo(data)
+        self.camera_info_sub.unregister() #Only subscribe once
+
+def main(args):
+    '''Initializes and cleanup ros node'''
+    rospy.init_node('image_projection', anonymous=True)
+    ic = image_projection()
+    try:
+        rospy.spin()
+    except KeyboardInterrupt:
+        print("Shutting down")
+    cv2.destroyAllWindows()
+
+if __name__ == '__main__':
+    main(sys.argv)
