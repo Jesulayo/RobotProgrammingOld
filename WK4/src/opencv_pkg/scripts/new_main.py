@@ -4,13 +4,17 @@ from sensor_msgs.msg import Image
 from cv_bridge import CvBridge, CvBridgeError
 import cv2
 import numpy as np
+from time import sleep
 # from tracker import EuclideanDistTracker
 
 # tracker = EuclideanDistTracker()
 
-class Tracker(object):
+class Tracker():
     def __init__(self):
         self.bridge = CvBridge()
+        # self.number = 0
+    def subs(self):
+        self.number = 0
         self.front_camera = rospy.Subscriber("/thorvald_001/kinect2_right_camera/hd/image_color_rect", Image, self.callback)
     
     def callback(self, data):
@@ -49,7 +53,8 @@ class Tracker(object):
         # Retrieve contour for analysis and shape detection
         cnts, _ = cv2.findContours(dilation, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)[-2:]
         detections = []
-        id = 0
+        # id = 0
+        print(self.number)
         
         for c in cnts:
             area = cv2.contourArea(c)
@@ -59,13 +64,13 @@ class Tracker(object):
                 detections.append([x,y,w,h])
                 # cv2.rectangle(roi, (x,y), (x+w, y+h), (255,255,255),2)
                 # cv2.putText(roi, str(id), (x, y), cv2.FONT_HERSHEY_COMPLEX, 0.7, (255,255,255), 2)
-
+        # print(len(detections))
         # print(detections)
         for detection in detections:
             x, y, w, h = detection
-            id += 1
+            self.number += 1
             cv2.rectangle(roi, (x,y), (x+w, y+h), (255,255,255),2)
-            cv2.putText(roi, str(id), (x, y), cv2.FONT_HERSHEY_COMPLEX, 0.7, (255,255,255), 2)
+            cv2.putText(roi, str(self.number), (x, y), cv2.FONT_HERSHEY_COMPLEX, 0.7, (255,255,255), 2)
 
 
         # boxes_ids = tracker.update(detections)
@@ -81,6 +86,8 @@ class Tracker(object):
         #print(height, width)
 
         cv2.waitKey(30)
+        # sleep(10)
+        # self.front_camera.unregister()
 
 def main():
     rospy.init_node("tracker", anonymous=True)

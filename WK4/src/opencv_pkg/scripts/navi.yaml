@@ -1,0 +1,234 @@
+- meta:
+    map: test       #2D map name  
+    node: WayPoint0
+    pointset: test
+  node:
+    edges:
+    - action: move_base           #ros action for the edge
+      edge_id: WayPoint0_WayPoint1    #id of edge
+      inflation_radius: 0.0
+      map_2d: test
+      node: WayPoint1           #name of ending node
+      recovery_behaviours_config: ''
+      top_vel: 0.55         #maximum linear velocity for the edge
+    localise_by_topic: ''
+    map: test      
+    name: WayPoint0     #name of node
+    pointset: test
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: -10.0
+        y: -4.0
+        z: 0.0
+    verts:
+    - x: 0.692909657955
+      y: 0.287012577057
+    - x: 0.287012577057
+      y: 0.692909657955
+    - x: -0.287012577057
+      y: 0.692909657955
+    - x: -0.692909657955
+      y: 0.287012577057
+    - x: -0.692909657955
+      y: -0.287012577057
+    - x: -0.287012577057
+      y: -0.692909657955
+    - x: 0.287012577057
+      y: -0.692909657955
+    - x: 0.692909657955
+      y: -0.287012577057
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+
+- meta:
+    map: test       #2D map name  
+    node: WayPoint1
+    pointset: test
+  node:
+    edges:
+    - action: move_base           #ros action for the edge
+      edge_id: WayPoint1_WayPoint2    #id of edge
+      inflation_radius: 0.0
+      map_2d: test
+      node: WayPoint2           #name of ending node
+      recovery_behaviours_config: ''
+      top_vel: 0.55         #maximum linear velocity for the edge
+    localise_by_topic: ''
+    map: test      
+    name: WayPoint1     #name of node
+    pointset: test
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: -7.0
+        y: -4.0
+        z: 0.0
+    verts:
+    - x: 0.692909657955
+      y: 0.287012577057
+    - x: 0.287012577057
+      y: 0.692909657955
+    - x: -0.287012577057
+      y: 0.692909657955
+    - x: -0.692909657955
+      y: 0.287012577057
+    - x: -0.692909657955
+      y: -0.287012577057
+    - x: -0.287012577057
+      y: -0.692909657955
+    - x: 0.287012577057
+      y: -0.692909657955
+    - x: 0.692909657955
+      y: -0.287012577057
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+
+- meta:
+    map: test
+    node: WayPoint2
+    pointset: test
+  node:
+    edges:
+    - action: move_base
+      edge_id: WayPoint2_WayPoint3
+      inflation_radius: 0.0
+      map_2d: test
+      node: WayPoint3
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: test
+    name: WayPoint2
+    pointset: test
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: -4.5
+        y: -4.0
+        z: 0.0
+    verts:
+    - x: 0.692909657955
+      y: 0.287012577057
+    - x: 0.287012577057
+      y: 0.692909657955
+    - x: -0.287012577057
+      y: 0.692909657955
+    - x: -0.692909657955
+      y: 0.287012577057
+    - x: -0.692909657955
+      y: -0.287012577057
+    - x: -0.287012577057
+      y: -0.692909657955
+    - x: 0.287012577057
+      y: -0.692909657955
+    - x: 0.692909657955
+      y: -0.287012577057
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+
+- meta:
+    map: test
+    node: WayPoint3
+    pointset: test
+  node:
+    edges:
+    - action: move_base
+      edge_id: WayPoint3_WayPoint4
+      inflation_radius: 0.0
+      map_2d: test
+      node: WayPoint4
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: test
+    name: WayPoint3
+    pointset: test
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: -2.0
+        y: -4.0
+        z: 0.0
+    verts:
+    - x: 0.692909657955
+      y: 0.287012577057
+    - x: 0.287012577057
+      y: 0.692909657955
+    - x: -0.287012577057
+      y: 0.692909657955
+    - x: -0.692909657955
+      y: 0.287012577057
+    - x: -0.692909657955
+      y: -0.287012577057
+    - x: -0.287012577057
+      y: -0.692909657955
+    - x: 0.287012577057
+      y: -0.692909657955
+    - x: 0.692909657955
+      y: -0.287012577057
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+
+- meta:
+    map: test
+    node: WayPoint4
+    pointset: test
+  node:
+    edges:
+    - action: move_base
+      edge_id: WayPoint4_WayPoint0
+      inflation_radius: 0.0
+      map_2d: test
+      node: WayPoint0
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: test
+    name: WayPoint4
+    pointset: test
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x:  2.0
+        y: -4.0
+        z: 0.0
+    verts:
+    - x: 0.692909657955
+      y: 0.287012577057
+    - x: 0.287012577057
+      y: 0.692909657955
+    - x: -0.287012577057
+      y: 0.692909657955
+    - x: -0.692909657955
+      y: 0.287012577057
+    - x: -0.692909657955
+      y: -0.287012577057
+    - x: -0.287012577057
+      y: -0.692909657955
+    - x: 0.287012577057
+      y: -0.692909657955
+    - x: 0.692909657955
+      y: -0.287012577057
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
